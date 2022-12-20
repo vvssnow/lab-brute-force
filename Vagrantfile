@@ -3,29 +3,40 @@
 
 
 Vagrant.configure("2") do |config|
-  config.vm.define "srvcentosattacker" do |srvcentosattacker|
-    srvcentosattacker.vm.box = "centos/7"
-    srvcentosattacker.vm.hostname = "srv-attacker"
-    srvcentosattacker.vm.network "public_network", ip: "192.168.15.220" #"Best pratics define static ip here[You decision]"
-    srvcentosattacker.vm.provision "shell", path: "provision-attacker.sh"
+  config.vm.define "srv-attacker-out" do |srvattackerout|
+    srvattackerout.vm.box = "centos/7"
+    srvattackerout.vm.hostname = "srv-attacker-out"
+    srvattackerout.vm.network "public_network", ip: "192.168.15.250" #Define IP estático
+    srvattackerout.vm.provision "shell", path: "provision-attacker.sh"
       config.vm.provider "vmware_desktop" do |v|
-        v.vmx["ethernet0.pcislotnumber"] = "32"
-        v.vmx["memsize"] = "512"
-        v.vmx["numvcpus"] = "1"
+        v.vmx["memsize"] = "512" #Define memoria
+        v.vmx["numvcpus"] = "1"  #Define cpus
       end
   end
 end
 
 Vagrant.configure("2") do |config|
-  config.vm.define "srvcentostarget" do |srvcentostarget|
-    srvcentostarget.vm.box = "centos/7"
-    srvcentostarget.vm.hostname = "srv-target"
-    srvcentostarget.vm.network "public_network", ip: "192.168.15.240" #"Best pratics define static ip here [You decision]"
-    srvcentostarget.vm.provision "shell", path: "provision-target.sh"
+  config.vm.define "srv-attacker-in" do |srvattackerin|
+    srvattackerin.vm.box = "centos/7"
+    srvattackerin.vm.hostname = "srv-attacker-in"
+    srvattackerin.vm.network "private_network", ip: "10.100.0.30" #Define IP estático
+    srvattackerin.vm.provision "shell", path: "provision-attacker.sh"
       config.vm.provider "vmware_desktop" do |v|
-        v.vmx["ethernet0.pcislotnumber"] = "32"
-        v.vmx["memsize"] = "512"
-        v.vmx["numvcpus"] = "1"
+        v.vmx["memsize"] = "512" #Define memoria
+        v.vmx["numvcpus"] = "1"  #Define cpus
+      end
+  end
+end
+
+Vagrant.configure("2") do |config|
+  config.vm.define "srv-target" do |srvtarget|
+    srvtarget.vm.box = "centos/7"
+    srvtarget.vm.hostname = "srv-target"
+    srvtarget.vm.network "private_network", ip: "10.100.0.20" #Define IP estático
+    srvtarget.vm.provision "shell", path: "provision-target.sh"
+      config.vm.provider "vmware_desktop" do |v|
+        v.vmx["memsize"] = "512" #Define memoria
+        v.vmx["numvcpus"] = "1"  #Define cpus
       end
   end
 end
