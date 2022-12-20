@@ -5,7 +5,7 @@ CENÁRIO
 
 ![image](https://user-images.githubusercontent.com/111648247/208739596-b5e8da3f-4c60-42da-9e30-a51b0a4f918b.png)
 
-Config. Workstation Attacker [Hardware]
+**Config. Workstation Attacker [Hardware]**
 ```
 [vagrant@srv-attacker-in ~]$ hostnamectl
    Static hostname: srv-attacker-in
@@ -28,7 +28,7 @@ Password: vagrant
 Obs.: Ajuste ja realizado para ssh no arquivo "provision"
 
 
-Firewall Fortigate [Firmware / FortiOS]
+**Firewall Fortigate [Firmware / FortiOS]**
 ```
 FortiGate-VM64 # get system status | grep [vV]*ersion
 Version: FortiGate-VM64 v7.2.0,build1157,220331 (GA.F)
